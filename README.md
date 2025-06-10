@@ -1,6 +1,3 @@
-Sure! Here's a GitHub-ready README with emojis to make it friendly and clear:
-
-````markdown
 # 🏨 Hotel Management System
 
 A simple **Java console application** to manage hotel room bookings.  
