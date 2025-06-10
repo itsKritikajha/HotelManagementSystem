@@ -85,11 +85,23 @@ public class HotelManagement {
 
         System.out.println("-----Welcome to Hotel Management System-----\n");
 
-        System.out.print("Enter your name: ");
-        String name = sc.nextLine();
+        String name;
+        do {
+            System.out.print("Enter your name: ");
+            name = sc.nextLine();
+            if (!name.matches("[a-zA-Z ]+")) {
+                System.out.println("Invalid name. Please enter only alphabets.");
+            }
+        } while (!name.matches("[a-zA-Z ]+"));
 
-        System.out.print("Enter your phone number: ");
-        String phoneNumber = sc.nextLine();
+        String phoneNumber;
+        do {
+            System.out.print("Enter your phone number: ");
+            phoneNumber = sc.nextLine();
+            if (!phoneNumber.matches("\\d{10}")) {
+                System.out.println("Invalid phone number. Please enter a 10-digit number.");
+            }
+        } while (!phoneNumber.matches("\\d{10}"));
 
         Details customer = new Details(name, phoneNumber);
         customer.displayDetails();
