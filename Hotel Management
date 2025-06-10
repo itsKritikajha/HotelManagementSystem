@@ -1,4 +1,6 @@
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 class Details {
@@ -8,6 +10,14 @@ class Details {
     public Details(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public void displayDetails() {
@@ -36,7 +46,7 @@ class Room {
 }
 
 class BookingRoom {
-    public void bookRooms(Scanner sc) {
+    public void bookRooms(Scanner sc, Details customer) {
         System.out.println("-----Booking Room-----");
 
         try {
@@ -63,11 +73,19 @@ class BookingRoom {
             FileWriter fw = new FileWriter("bookings.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
 
+            // Write booking info with customer details and timestamp
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            bw.write("Booking Time: " + dtf.format(now) + "\n");
+            bw.write("Customer Name: " + customer.getName() + "\n");
+            bw.write("Phone Number: " + customer.getPhoneNumber() + "\n");
+
             for (int i = 0; i < numberOfRooms; i++) {
                 int roomNumber = Room.generateUniqueRoomNumber();
                 System.out.println("Room Number: " + roomNumber);
                 bw.write("Room Number: " + roomNumber + "\n");
             }
+            bw.write("\n"); // extra line for readability
             bw.close();
 
             System.out.println("Rooms left: " + Room.availableRooms);
@@ -116,7 +134,7 @@ public class HotelManagement {
 
         String choice;
         do {
-            book.bookRooms(sc);
+            book.bookRooms(sc, customer);
             System.out.print("Do you want to book more rooms? (yes/no): ");
             choice = sc.nextLine();
         } while (choice.equalsIgnoreCase("yes"));
